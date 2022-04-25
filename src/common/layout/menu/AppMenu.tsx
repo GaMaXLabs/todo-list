@@ -15,9 +15,10 @@ const AppMenu: React.FC = () => {
       sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
       elevation={3}
     >
-      <BottomNavigation showLabels value={0}>
+      <BottomNavigation showLabels value={0}  >
         <BottomNavigationAction
           label="Active"
+        
           icon={<TaskAltIcon />}
           onClick={() => onLink("/")}
         />
