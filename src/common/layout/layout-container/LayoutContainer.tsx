@@ -1,0 +1,22 @@
+import { Container, Grid } from "@mui/material";
+import Header from "../header/Header";
+import AppMenu from "../menu/AppMenu";
+
+const LayoutContainer: React.FC<{ children: JSX.Element }> = (props) => {
+  return (
+    <>
+      <Header />
+      <main>
+        <Container sx={{ py: 4 }} maxWidth="md">
+          <Grid container spacing={4}>
+            <Grid item xs={12}>
+              {props.children}
+            </Grid>
+          </Grid>
+        </Container>
+      </main>
+      <AppMenu />
+    </>
+  );
+};
+export default LayoutContainer;
