@@ -11,7 +11,7 @@ const Header: React.FC = () => {
 
   const markAllDoneClickHandler = () => {
     for (const todo of activeTodos) {
-      dispatch(updateTodoAsync({...todo, status: TodoStatus.completed, completedDate: new Date().getTime() }))
+      dispatch(updateTodoAsync({ ...todo, status: TodoStatus.completed, completedDate: new Date().getTime() }))
     }
   }
   const clearAllDoneClickHandler = () => {
@@ -52,7 +52,11 @@ const Header: React.FC = () => {
                 <ClearAll />
               </IconButton>
             </Tooltip>
+
           </div>
+          <Typography variant="caption" component="div" sx={{ flexGrow: 1 }}>
+            {activeTodos.length} items left
+          </Typography>
         </Toolbar>
       </AppBar>
     </header>
