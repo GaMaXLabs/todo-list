@@ -1,7 +1,5 @@
 import List from "@mui/material/List";
-import moment from "moment";
 import { Todo } from "../../models/Todo.model";
-import { TodoStatus } from "../../models/TodoStatus.model";
 import TodoItem from "../todo-item/TodoItem";
 
 const TodosList: React.FC<{ todos: Array<Todo> }> = (props) => {

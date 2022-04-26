@@ -9,14 +9,14 @@ const TodosPage: React.FC = () => {
   const activeTodos = todos.filter((todo) => todo.status === TodoStatus.active);
   const dispatch = useAppDispatch();
   function onSaveHandler(description: string) {
-    dispatch(
-      addTodo({
-        id: new Date().getTime().toString(),
-        description: description,
-        status: TodoStatus.active,
-        createdDate: new Date(),
-      })
-    );
+    const todo = {
+      id: new Date().getTime().toString(),
+      description: description,
+      status: TodoStatus.active,
+      createdDate: new Date(),
+    };
+    //dispatch(addTodoAsync(todo));
+    dispatch(addTodo(todo));
   }
   return (
     <>
