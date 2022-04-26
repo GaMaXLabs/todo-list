@@ -2,11 +2,12 @@ import { AppBar, IconButton, Toolbar, Tooltip, Typography } from "@mui/material"
 import { ClearAll, FactCheck, TaskAlt } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { TodoStatus } from "../../../features/todos/models/TodoStatus.model";
-import { updateTodoAsync } from "../../../features/todos/store/todosSlice";
+import { deleteTodoItemAsync, updateTodoAsync } from "../../../features/todos/store/todosSlice";
 
 const Header: React.FC = () => {
   const todos = useAppSelector((state) => state.todos.todos);
   const activeTodos = todos.filter((todo) => todo.status === TodoStatus.active);
+  const completedTodos = todos.filter((todo) => todo.status === TodoStatus.completed);
   const dispatch = useAppDispatch();
 
   const markAllDoneClickHandler = () => {
@@ -15,7 +16,9 @@ const Header: React.FC = () => {
     }
   }
   const clearAllDoneClickHandler = () => {
-
+    for (const todo of completedTodos) {
+      dispatch(deleteTodoItemAsync(todo))
+    }
   }
   return (
     <header>
