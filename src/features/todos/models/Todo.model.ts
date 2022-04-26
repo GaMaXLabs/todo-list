@@ -1,7 +1,7 @@
 import { TodoStatus } from "./TodoStatus.model";
 
 export interface Todo {
-  id: string;
+  id: string | null;
   description: string;
   status: TodoStatus;
   completedDate?: Date;

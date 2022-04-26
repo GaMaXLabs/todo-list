@@ -8,13 +8,13 @@ import moment from "moment";
 import { useAppDispatch } from "../../../../app/hooks";
 import { Todo } from "../../models/Todo.model";
 import { TodoStatus } from "../../models/TodoStatus.model";
-import { completeTodo } from "../../store/todosSlice";
+import { updateTodoAsync } from "../../store/todosSlice";
 
 const TodoItem: React.FC<{ todo: Todo }> = (props) => {
   const labelId = `checkbox-list-secondary-label-${props.todo.id}`;
   const dispatch = useAppDispatch();
   function checkedHanlder() {
-    dispatch(completeTodo(props.todo.id));
+    dispatch(updateTodoAsync({...props.todo, status: TodoStatus.completed, completedDate: new Date()}))
   }
 
   return (
@@ -37,7 +37,7 @@ const TodoItem: React.FC<{ todo: Todo }> = (props) => {
         <ListItemText
           id={labelId}
           primary={props.todo.description}
-          secondary={props.todo.status=== TodoStatus.active? `Created ${moment(props.todo.createdDate).fromNow()}`: `Completed ${moment(props.todo.completedDate).fromNow()}`}
+          secondary={props.todo.status === TodoStatus.active ? `Created ${moment(props.todo.createdDate).fromNow()}` : `Completed ${moment(props.todo.completedDate).fromNow()}`}
         />
       </ListItemButton>
     </ListItem>
