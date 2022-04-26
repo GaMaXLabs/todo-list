@@ -33,11 +33,23 @@ export const postTodo = async (todo: Todo): Promise<Todo> => {
 };
 
 export const updateTodo = async (todo: Todo): Promise<Todo> => {
-   await fetch(
+  await fetch(
     `https://garrido-todo-default-rtdb.europe-west1.firebasedatabase.app/todos/${todo.id}/.json`,
     {
       body: JSON.stringify(todo),
       method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+  return todo;
+};
+
+export const deleteTodo = async (todo: Todo): Promise<Todo> => {
+  await fetch(
+    `https://garrido-todo-default-rtdb.europe-west1.firebasedatabase.app/todos/${todo.id}/.json`,
+    {
+      body: JSON.stringify(todo),
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
     }
   );

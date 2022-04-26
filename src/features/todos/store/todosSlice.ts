@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Todo } from "../models/Todo.model";
 import { TodoStatus } from "../models/TodoStatus.model";
-import { fetchTodos, postTodo, updateTodo } from "../services/api";
+import { deleteTodo, fetchTodos, postTodo, updateTodo } from "../services/api";
 
 export interface TodosState {
   todos: Array<Todo>;
@@ -16,6 +16,7 @@ const initialState: TodosState = {
 // async store modifiers
 export const getTodosAsync = createAsyncThunk("todos/get", fetchTodos);
 export const addTodoAsync = createAsyncThunk("todos/add", postTodo);
+export const deleteTodoItemAsync = createAsyncThunk("todos/delete ", deleteTodo);
 export const updateTodoAsync = createAsyncThunk("todos/update", updateTodo);
 
 export const todosSlice = createSlice({
@@ -29,7 +30,7 @@ export const todosSlice = createSlice({
       const todoItem = state.todos.find((todo) => todo.id === action.payload);
       if (todoItem) {
         todoItem.status = TodoStatus.completed;
-        todoItem.completedDate = new Date();
+        todoItem.completedDate = new Date().getTime();
       }
     },
     clearCompleted: (state) => {
@@ -69,6 +70,16 @@ export const todosSlice = createSlice({
         Object.assign(todoItem, action.payload);
       })
       .addCase(updateTodoAsync.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(deleteTodoItemAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteTodoItemAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.todos.splice(state.todos.findIndex(todo => todo.id === action.payload.id), 1)
+      })
+      .addCase(deleteTodoItemAsync.rejected, (state) => {
         state.status = "failed";
       });
   },

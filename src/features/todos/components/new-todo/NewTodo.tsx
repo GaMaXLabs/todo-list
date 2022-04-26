@@ -1,10 +1,10 @@
 import { TextField } from "@mui/material";
 import React, { useRef, useState } from "react";
-const NewTodo: React.FC<{ onSave: (description: string) => void }> = (
+const NewTodo: React.FC<{ onSave: (description: string) => void, onFocusOut?: () => void, value: string }> = (
   props
 ) => {
   const todoTextIputRef = useRef<HTMLInputElement>(null);
-  const [todoText, setTodoText] = useState<string>(() => "");
+  const [todoText, setTodoText] = useState<string>(() => props.value);
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setTodoText(e.target.value);
   }
@@ -17,6 +17,9 @@ const NewTodo: React.FC<{ onSave: (description: string) => void }> = (
       props.onSave(todoText);
     }
   }
+  function blurHandler(){
+    props.onFocusOut?.();
+  }
   return (
     <TextField
       fullWidth
@@ -26,6 +29,7 @@ const NewTodo: React.FC<{ onSave: (description: string) => void }> = (
       inputRef={todoTextIputRef}
       onKeyDown={saveTodoHandler}
       value={todoText}
+      onBlur={blurHandler}
       onChange={handleChange}
     />
   );
