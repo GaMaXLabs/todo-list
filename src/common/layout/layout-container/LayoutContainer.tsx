@@ -1,5 +1,6 @@
-import { Container, Grid } from "@mui/material";
+import { Backdrop, Container, Grid } from "@mui/material";
 import Header from "../header/Header";
+import LoadingOverlay from "../loading-overlay/LoadingOverlay";
 import AppMenu from "../menu/AppMenu";
 
 const LayoutContainer: React.FC<{ children: JSX.Element }> = (props) => {
@@ -16,6 +17,7 @@ const LayoutContainer: React.FC<{ children: JSX.Element }> = (props) => {
         </Container>
       </main>
       <AppMenu />
+     <LoadingOverlay/>
     </>
   );
 };
