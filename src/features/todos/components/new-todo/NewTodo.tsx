@@ -23,7 +23,7 @@ const NewTodo: React.FC<{ onSave: (description: string) => void, onFocusOut?: ()
   return (
     <TextField
       fullWidth
-      label="What needs to be done?"
+      label="¿Qué quieres hacer?"
       id="newTodo"
       autoFocus
       inputRef={todoTextIputRef}

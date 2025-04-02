@@ -26,11 +26,11 @@ const Header: React.FC = () => {
         <Toolbar>
           <FactCheck sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            To Do Demo App
+            App Mis Tareas
           </Typography>
           <div>
 
-            <Tooltip title="Mark all as done">
+            <Tooltip title="Marcar todas las tareas como completadas">
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
               </IconButton>
             </Tooltip>
 
-            <Tooltip title="Clear all done tasks">
+            <Tooltip title="Limpiar todas las tareas completadas">
               <IconButton
                 size="large"
                 onClick={clearAllDoneClickHandler}
@@ -58,7 +58,7 @@ const Header: React.FC = () => {
 
           </div>
           <Typography variant="caption" component="div" sx={{ flexGrow: 1 }}>
-            {activeTodos.length} items left
+            {activeTodos.length} tareas pendientes
           </Typography>
         </Toolbar>
       </AppBar>

@@ -4,17 +4,18 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { useAppDispatch } from "../../../../app/hooks";
 import { Todo } from "../../models/Todo.model";
 import { TodoStatus } from "../../models/TodoStatus.model";
-import NewTodo from "../new-todo/NewTodo"
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import NewTodo from "../new-todo/NewTodo";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { deleteTodoItemAsync, updateTodoAsync } from "../../store/todosSlice";
 import { useState } from "react";
 
 const TodoItem: React.FC<{ todo: Todo }> = (props) => {
+  moment.locale("es");
   const labelId = `checkbox-list-secondary-label-${props.todo.id}`;
   const [editMode, setEditMode] = useState<boolean>(() => false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(() => null);
@@ -22,7 +23,13 @@ const TodoItem: React.FC<{ todo: Todo }> = (props) => {
 
   //done
   function checkedHanlder() {
-    dispatch(updateTodoAsync({ ...props.todo, status: TodoStatus.completed, completedDate: new Date().getTime() }))
+    dispatch(
+      updateTodoAsync({
+        ...props.todo,
+        status: TodoStatus.completed,
+        completedDate: new Date().getTime(),
+      })
+    );
   }
 
   //edit task
@@ -30,31 +37,31 @@ const TodoItem: React.FC<{ todo: Todo }> = (props) => {
     setEditMode(true);
   }
   function onUpdateHandler(description: string) {
-    dispatch(updateTodoAsync({ ...props.todo, description }))
+    dispatch(updateTodoAsync({ ...props.todo, description }));
     setEditMode(false);
   }
   function onEditCancelled() {
     setEditMode(false);
   }
 
-  //delete task 
+  //delete task
   const open = Boolean(anchorEl);
   const rightClickHanlder = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
-  }
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
   const handleDeleteClick = () => {
-    dispatch(deleteTodoItemAsync(props.todo))
+    dispatch(deleteTodoItemAsync(props.todo));
     setAnchorEl(null);
   };
 
   return (
     <>
       <div>{editMode}</div>
-      {!editMode ?
+      {!editMode ? (
         <ListItem
           onDoubleClick={doubleClickHanlder}
           onContextMenu={rightClickHanlder}
@@ -76,12 +83,21 @@ const TodoItem: React.FC<{ todo: Todo }> = (props) => {
             <ListItemText
               id={labelId}
               primary={props.todo.description}
-              secondary={props.todo.status === TodoStatus.active ? `Created ${moment(props.todo.createdDate).fromNow()}` : `Completed ${moment(props.todo.completedDate).fromNow()}`}
+              secondary={
+                props.todo.status === TodoStatus.active
+                  ? `Creada ${moment(props.todo.createdDate).fromNow()}`
+                  : `Completada ${moment(props.todo.completedDate).fromNow()}`
+              }
             />
           </ListItemButton>
         </ListItem>
-        :
-        <NewTodo onSave={onUpdateHandler} onFocusOut={onEditCancelled} value={props.todo.description} />}
+      ) : (
+        <NewTodo
+          onSave={onUpdateHandler}
+          onFocusOut={onEditCancelled}
+          value={props.todo.description}
+        />
+      )}
       <Menu
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"
@@ -89,17 +105,16 @@ const TodoItem: React.FC<{ todo: Todo }> = (props) => {
         open={open}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
+          vertical: "top",
+          horizontal: "left",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
+          vertical: "top",
+          horizontal: "left",
         }}
       >
-        <MenuItem onClick={handleDeleteClick}>Delete Item</MenuItem>
+        <MenuItem onClick={handleDeleteClick}>Borrar Tarea</MenuItem>
       </Menu>
-
     </>
   );
 };

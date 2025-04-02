@@ -18,6 +18,7 @@
     "@types/react-dom": "^18.0.2",
     "@types/react-redux": "^7.1.24",
     "moment": "^2.29.3",
+    "moment-with-locales-es6": "^1.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^7.2.8",

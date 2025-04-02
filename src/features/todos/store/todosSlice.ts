@@ -16,10 +16,7 @@ const initialState: TodosState = {
 // async store modifiers
 export const getTodosAsync = createAsyncThunk("todos/get", fetchTodos);
 export const addTodoAsync = createAsyncThunk("todos/add", postTodo);
-export const deleteTodoItemAsync = createAsyncThunk(
-  "todos/delete ",
-  deleteTodo
-);
+export const deleteTodoItemAsync = createAsyncThunk("todos/delete", deleteTodo);
 export const updateTodoAsync = createAsyncThunk("todos/update", updateTodo);
 
 export const todosSlice = createSlice({
@@ -41,7 +38,10 @@ export const todosSlice = createSlice({
         (todo) => todo.status === TodoStatus.active
       );
     },
-    updateStatus: (state, action: PayloadAction<"idle" | "loading" | "failed">) => {
+    updateStatus: (
+      state,
+      action: PayloadAction<"idle" | "loading" | "failed">
+    ) => {
       state.status = action.payload;
     },
   },
@@ -75,7 +75,7 @@ export const todosSlice = createSlice({
         const todoItem = state.todos.find(
           (todo) => todo.id === action.payload.id
         );
-        Object.assign(todoItem, action.payload);
+        Object.assign(todoItem ?? {}, action.payload);
       })
       .addCase(updateTodoAsync.rejected, (state) => {
         state.status = "failed";
@@ -96,6 +96,7 @@ export const todosSlice = createSlice({
   },
 });
 
-export const { addTodo, completeTodo, clearCompleted, updateStatus } = todosSlice.actions;
+export const { addTodo, completeTodo, clearCompleted, updateStatus } =
+  todosSlice.actions;
 
 export default todosSlice.reducer;

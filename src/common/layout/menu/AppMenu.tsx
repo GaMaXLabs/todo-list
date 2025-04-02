@@ -17,13 +17,13 @@ const AppMenu: React.FC = () => {
     >
       <BottomNavigation showLabels value={0}  >
         <BottomNavigationAction
-          label="Active"
+          label="Pendientes"
         
           icon={<TaskAltIcon />}
           onClick={() => onLink("/")}
         />
         <BottomNavigationAction
-          label="Completed"
+          label="Completadas"
           icon={<TaskIcon />}
           onClick={() => onLink("/completed")}
         />
