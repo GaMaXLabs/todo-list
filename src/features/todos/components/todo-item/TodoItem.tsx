@@ -52,8 +52,20 @@ const TodoItem: React.FC<{ todo: Todo }> = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const handleDeleteClick = () => {
     dispatch(deleteTodoItemAsync(props.todo));
+    setAnchorEl(null);
+  };
+
+  const handleRestoreClick = () => {
+    dispatch(
+      updateTodoAsync({
+        ...props.todo,
+        status: TodoStatus.active,
+        completedDate: undefined,
+      })
+    );
     setAnchorEl(null);
   };
 
@@ -113,6 +125,11 @@ const TodoItem: React.FC<{ todo: Todo }> = (props) => {
         }}
       >
         <MenuItem onClick={handleDeleteClick}>Borrar Tarea</MenuItem>
+        {props.todo.status === TodoStatus.completed && (
+          <MenuItem onClick={handleRestoreClick}>
+            Mover a tareas pendientes
+          </MenuItem>
+        )}
       </Menu>
     </>
   );
