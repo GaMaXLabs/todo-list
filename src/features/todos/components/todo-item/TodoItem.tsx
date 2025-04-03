@@ -3,8 +3,8 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-} from "@mui/material";
-import moment from "moment-with-locales-es6";
+} from "@mui/material"; 
+import { DateTime } from "luxon"; 
 import { useAppDispatch } from "../../../../app/hooks";
 import { Todo } from "../../models/Todo.model";
 import { TodoStatus } from "../../models/TodoStatus.model";
@@ -14,8 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { deleteTodoItemAsync, updateTodoAsync } from "../../store/todosSlice";
 import { useState } from "react";
 
-const TodoItem: React.FC<{ todo: Todo }> = (props) => {
-  moment.locale("es");
+const TodoItem: React.FC<{ todo: Todo }> = (props) => {  
   const labelId = `checkbox-list-secondary-label-${props.todo.id}`;
   const [editMode, setEditMode] = useState<boolean>(() => false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(() => null);
@@ -85,8 +84,8 @@ const TodoItem: React.FC<{ todo: Todo }> = (props) => {
               primary={props.todo.description}
               secondary={
                 props.todo.status === TodoStatus.active
-                  ? `Creada ${moment(props.todo.createdDate).fromNow()}`
-                  : `Completada ${moment(props.todo.completedDate).fromNow()}`
+                  ? `Creada ${DateTime.fromMillis(props.todo.createdDate).setLocale("es").toRelative()}`
+                  : `Completada ${DateTime.fromMillis(props.todo.completedDate??DateTime.now().toMillis()).setLocale("es").toRelative()}`
               }
             />
           </ListItemButton>
