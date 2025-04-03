@@ -11,7 +11,7 @@ function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getTodosAsync());
-  }, []);
+  }, [dispatch]);
   return (
     <BrowserRouter>
       <LayoutContainer>
