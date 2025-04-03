@@ -23,5 +23,13 @@ jobs:
       - name: Build Project
         run: npm run build
       - name: Run Tests
-        run: npm test
+        run: npm test -- --reporters=jest-junit
+
+      - name: Test Report
+        uses: dorny/test-reporter@v2
+        if: success() || failure()    
+        with:
+          path: junit.xml  
+          reporter: jest-junit 
+          name: JEST Tests    
    
