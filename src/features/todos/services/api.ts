@@ -1,8 +1,9 @@
+import { config } from "../../../config/app";
 import { FirebaseAddedDocument } from "../models/FirebaseAddedDocument.model";
 import { Todo } from "../models/Todo.model";
 export const fetchTodos = async (): Promise<Array<Todo>> => {
   const response = await fetch(
-    `https://garrido-todo-default-rtdb.europe-west1.firebasedatabase.app/todos.json`
+    `${config.rtdbUrl}todos.json`
   );
   const todos = new Array<Todo>();
   if (response) {
@@ -20,7 +21,7 @@ export const fetchTodos = async (): Promise<Array<Todo>> => {
 export const postTodo = async (todo: Todo): Promise<Todo> => {
   todo.id = null;
   const response = await fetch(
-    `https://garrido-todo-default-rtdb.europe-west1.firebasedatabase.app/todos.json`,
+    `${config.rtdbUrl}todos.json`,
     {
       body: JSON.stringify(todo),
       method: "POST",
@@ -34,7 +35,7 @@ export const postTodo = async (todo: Todo): Promise<Todo> => {
 
 export const updateTodo = async (todo: Todo): Promise<Todo> => {
   await fetch(
-    `https://garrido-todo-default-rtdb.europe-west1.firebasedatabase.app/todos/${todo.id}/.json`,
+    `${config.rtdbUrl}todos/${todo.id}/.json`,
     {
       body: JSON.stringify(todo),
       method: "PATCH",
@@ -46,7 +47,7 @@ export const updateTodo = async (todo: Todo): Promise<Todo> => {
 
 export const deleteTodo = async (todo: Todo): Promise<Todo> => {
   await fetch(
-    `https://garrido-todo-default-rtdb.europe-west1.firebasedatabase.app/todos/${todo.id}/.json`,
+    `${config.rtdbUrl}todos/${todo.id}/.json`,
     {
       body: JSON.stringify(todo),
       method: "DELETE",
